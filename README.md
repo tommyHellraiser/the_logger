@@ -1,15 +1,15 @@
 [![Crates.io](https://img.shields.io/crates/v/the_logger?logo=rust)](https://crates.io/crates/the_logger)
-![Crates.io](https://img.shields.io/crates/l/the_logger/0.5.0)
+![Crates.io](https://img.shields.io/crates/l/the_logger/0.5.1)
 [![Rust](https://github.com/tommyHellraiser/the_logger/actions/workflows/compile.yml/badge.svg)](https://github.com/tommyHellraiser/the_logger/actions/workflows/compile.yml)
 [![rustc_version]][Rust 1.72]
 [![the_logger]][the_logger_docs]
 
 
-[rustc_version]: https://img.shields.io/badge/rustc_version-1.31+-lightgray.svg
-[Rust 1.72]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html
+[rustc_version]: https://img.shields.io/badge/rustc_version-1.72+-lightgray.svg
+[Rust 1.72]: https://blog.rust-lang.org/2023/08/24/Rust-1.72.0.html
 [the_logger]: https://img.shields.io/badge/the__logger-docs.rs-green?logo=docs.rs
 
-[the_logger_docs]: https://docs.rs/the_logger/0.5.0/the_logger/
+[the_logger_docs]: https://docs.rs/the_logger/0.5.1/the_logger/
 
 # the_logger;
 

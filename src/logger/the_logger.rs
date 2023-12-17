@@ -6,13 +6,17 @@ use tokio::sync::RwLock;
 use crate::logger::logger_config::{LogLevel, TheLoggerConfig};
 
 lazy_static!(
+    /// Static reference that allows the user to access the logger from anywhere in the code.
     static ref THE_LOGGER: TheLogger = TheLogger::new();
 );
 
+/// Main struct to instantiate when using TheLogger. Its inner RwLock allows only one usage of the file writer and
+/// configuration member at a time.
 pub struct TheLogger {
     inner: RwLock<TheLoggerInner>
 }
 
+#[doc(hidden)]
 struct TheLoggerInner {
     config: TheLoggerConfig,
     file_writer: File
@@ -21,6 +25,7 @@ struct TheLoggerInner {
 
 
 impl TheLogger {
+    #[doc(hidden)]
     fn new() -> Self {
         fs::create_dir_all("./logs/").unwrap();
         Self {
@@ -40,6 +45,9 @@ impl TheLogger {
     /// ## Description
     /// Returns the instance of the logger. This is the main way to access the logger, and it'll be configured by default.
     ///
+    /// TheLogger has built-in support for the format! macro, so the user can use it to format the log message without
+    /// having to allocate an extra variable, as shown in the example below.
+    ///
     /// Its setup can be changed later using the methods provided by this crate.
     ///
     /// ### Default settings:
@@ -55,6 +63,16 @@ impl TheLogger {
     /// ```text
     /// 2023-12-16 17:08:07.451851800  [VERBOSE]  This is a log example for the the_logger crate
     /// ```
+    ///
+    /// ### Usage example
+    /// ````rust
+    /// use the_logger::{log_warning, TheLogger};
+    ///
+    /// async fn init_logger(thread_id: u8) {
+    ///     let logger: &TheLogger = TheLogger::instance();
+    ///     log_warning!(logger, "This is a warning emitted by thread {}", thread_id);
+    /// }
+    /// ````
     pub fn instance() -> &'static Self {
         &THE_LOGGER
     }

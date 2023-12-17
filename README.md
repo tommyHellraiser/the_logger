@@ -19,7 +19,7 @@ creating a json file and setting the config in it.
 As mentioned, base usage is really simple, no configuration is required to log in its default settings. An async 
 function is required to call the logger:
 ````rust
-use the_logger::TheLogger;
+use the_logger::{log_warning, TheLogger};
 
 async fn init_logger(thread_id: u8) {
     let logger: &TheLogger = TheLogger::instance();
@@ -50,7 +50,7 @@ an extra variable to build the message. The first parameter of the macro needs t
 of them can be used as built-in String formatter, supporting all the format!() macro features:
 
 ````rust
-use the_logger::TheLogger;
+use the_logger::{log_warning, TheLogger};
 
 async fn init_logger(thread_id: u8) {
     let logger: &TheLogger = TheLogger::instance();
@@ -67,16 +67,14 @@ There are 2 main ways to use this logger: passing the instance by reference, or 
 want to:
 
 ````rust
-use the_logger::TheLogger;
+use the_logger::{log_info, TheLogger};
 
-async fn parent_function(thread_id: u8) {
+async fn parent_function() {
     let logger: &TheLogger = TheLogger::instance();
-    //  This log...
-    log_warning!(logger, "This is a log by thread {}", thread_id);
     
-    //  ...is equivalent content-wise to this log
-    let msg = format!("This is a log by thread {}", thread_id);
-    log_warning!(logger, msg);
+    child_function_one(logger).await;
+    
+    child_function_two();
 }
 
 async fn child_function_one(logger: &TheLogger) {
@@ -124,6 +122,7 @@ Each one of them may serve different purposes in your code, and are present for 
 To invoke each one of them, you can simply use the defined macro calls:
 ````rust
 use the_logger::TheLogger;
+use the_logger::{log, log_info, log_error, log_warning, log_debug, log_trace, log_critical};
 
 async fn init_logger(thread_id: u8) {
     let logger: &TheLogger = TheLogger::instance();

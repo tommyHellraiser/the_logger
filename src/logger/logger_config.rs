@@ -1,8 +1,12 @@
 
+/// Constant to define the initial log text content maximum length. Customizable by config
 const LOG_CONTENT_INITIAL_LENGTH: usize = 300;
+
+/// Constant to define the initial location text content maximum length. Customizable by config
 const LOCATION_CONTENT_INITIAL_LENGTH: usize = 60;
 
 #[derive(Debug)]
+/// TheLoggerConfig allows the user to configure on startup the logger's output.
 pub struct TheLoggerConfig {
     date_config: TheDateConfig,
     time_config: TheTimeConfig,
@@ -11,6 +15,7 @@ pub struct TheLoggerConfig {
 }
 
 #[derive(Default, Debug)]
+/// Date configuration section of TheLogger's config
 struct TheDateConfig {
     hide_years: bool,
     hide_months: bool,
@@ -18,6 +23,7 @@ struct TheDateConfig {
 }
 
 #[derive(Default, Debug)]
+/// Time configuration section of TheLogger's config
 struct TheTimeConfig {
     hide_hours: bool,
     hide_minutes: bool,
@@ -28,6 +34,13 @@ struct TheTimeConfig {
 }
 
 #[derive(Default, Debug)]
+/// Miscellaneous configuration section, that includes the ability to:
+/// - Hide the log level
+/// - Hide the file name
+/// - Hide the file line number
+/// - Show the column number (hidden by default)
+/// - Configure the location text content's maximum length
+/// - Configure the log text content's maximum length
 struct TheMiscConfig {
     hide_level: bool,
     hide_file_name: bool,
@@ -38,6 +51,7 @@ struct TheMiscConfig {
 }
 
 #[derive(Default, Debug, Copy, Clone)]
+/// 7 different types of log levels to allow the user to use the log n any way they need to
 pub(super) enum LogLevel {
     #[default]
     Verbose,

@@ -264,12 +264,38 @@ reduced amount of data that needs to be written in the file, and related to the 
 
 To test the file size, I ran a program with 100 threads for two minutes in the full configuration (default parameters)
 and with minimal configuration (only the log text content), and the file sizes were:
-- Around 1116KB for the full configuration (9692 lines)
-- Around 177KB for the minimal configuration (9705 lines)
+- Around 1116KB for the full configuration
+- Around 177KB for the minimal configuration
 
 Which means the file size was reduced by approximately 84% by leaving only the minimum required data. Of course, that 
 amount of threads introduced bottlenecks in file writing because of the time they had to wait for the lock to be released,
-but the size ratio remained constant nevertheless. To ensure this was the case, I reduced the amount of threads to
-30, with the same amount of time, and the results were:
-- Around 946KB for the full configuration (8216 lines)
-- Around 149KB for the minimal configuration (8225 lines)
+but the size ratio remained constant across the different tests nevertheless. To ensure this was the case, I reduced 
+the amount of threads to 30, with the same amount of time, and the results were:
+- Around 792KB for the full configuration
+- Around 124KB for the minimal configuration
+
+Which gives the same full_size/minimal_size ratio.
+
+## Future features and bug reports
+As I mentioned across this readme file, I have in mind some improvements and features, that include:
+- Configuration by creating a json file in a folder, yet to be determined
+- Configuration of the log file path
+- Configuration of the log file name
+- Configuration of some separators
+- Configuration of the log level enclosure -> [ERROR] vs {ERROR} vs (ERROR) vs ERROR vs |ERROR|, etc
+
+If you have any suggestions, bugs to report, or any other kind of feedback, I'll leave some contact channels ion the 
+next section.
+
+## Wrap-up
+That sums this crate up, I hope you find it useful, and if you have any questions, suggestions or reports, feel free
+to contact me at:
+
+email: ``nacho.ponce25@gmail.com``
+
+telegram: ``@tommyHellraiser``
+
+Or submit an issue in the GitHub repository:
+https://github.com/tommyHellraiser/the_logger
+
+Thank you for reading, and have a great one!

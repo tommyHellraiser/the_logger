@@ -9,7 +9,7 @@
 [Rust 1.72]: https://blog.rust-lang.org/2023/08/24/Rust-1.72.0.html
 [the_logger]: https://img.shields.io/badge/the__logger-docs.rs-green?logo=docs.rs
 
-[the_logger_docs]: https://docs.rs/the_logger/0.5.1/the_logger/
+[the_logger_docs]: https://docs.rs/the_logger/0.5.3/the_logger/
 
 # the_logger
 

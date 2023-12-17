@@ -1,5 +1,5 @@
 [![Crates.io](https://img.shields.io/crates/v/the_logger?logo=rust)](https://crates.io/crates/the_logger)
-![Crates.io](https://img.shields.io/crates/l/the_logger/0.5.1)
+![Crates.io](https://img.shields.io/crates/l/the_logger/0.5.0)
 [![Rust](https://github.com/tommyHellraiser/the_logger/actions/workflows/compile.yml/badge.svg)](https://github.com/tommyHellraiser/the_logger/actions/workflows/compile.yml)
 [![rustc_version]][Rust 1.72]
 [![the_logger]][the_logger_docs]
@@ -11,7 +11,7 @@
 
 [the_logger_docs]: https://docs.rs/the_logger/0.5.1/the_logger/
 
-# the_logger;
+# the_logger
 
 This crate was created with the purpose of making logging easier to the point where you need only two lines
 to create a log file. But besides being easy to use and spawn, it's also really customizable down to the 

@@ -502,6 +502,7 @@ impl TheLoggerConfig {
 }
 
 impl Default for TheLoggerConfig {
+    /// Custom implementation of the default trait to include default length values for location and log content text
     fn default() -> Self {
         Self {
             date_config: TheDateConfig::default(),

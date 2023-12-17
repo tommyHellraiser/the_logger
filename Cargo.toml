@@ -14,3 +14,8 @@ exclude = ["todos.md"]
 lazy_static = "1.4.0"
 tokio = { version = "1.35.0", features = ["sync"] }
 chrono = { version = "0.4.19" }
+serde = { version = "1.0.193", optional = true }
+serde_json = { version = "1.0.108", optional = true }
+
+[features]
+json_config = ["serde", "serde_json"]

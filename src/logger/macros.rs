@@ -22,7 +22,7 @@ macro_rules! log_error {
 }
 
 #[macro_export]
-macro_rules! log_warn {
+macro_rules! log_warning {
     ($logger:expr, $($msg:tt)*) => {
 
         $logger.warning().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;

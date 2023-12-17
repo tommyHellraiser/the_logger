@@ -1,4 +1,7 @@
 
+const LOG_CONTENT_INITIAL_LENGTH: usize = 300;
+const LOCATION_CONTENT_INITIAL_LENGTH: usize = 60;
+
 #[derive(Debug)]
 pub struct TheLoggerConfig {
     date_config: TheDateConfig,
@@ -96,8 +99,9 @@ impl TheLoggerConfig {
         self.log_level = LogLevel::Critical;
         self
     }
-
-    // Configuration methods
+    ///////////////////////////
+    /* Configuration methods */
+    ///////////////////////////
     /// ## Description
     /// Configures the log date to hide the years. Default is to show them
     pub fn hide_years(mut self) -> Self {
@@ -182,6 +186,8 @@ impl TheLoggerConfig {
     /// Configures the log file location to be hidden. Default is to show it
     pub fn hide_file_name(mut self) -> Self {
         self.misc_config.hide_file_name = true;
+        self.misc_config.hide_file_line = true;
+        self.misc_config.show_file_column = false;
         self
     }
 
@@ -314,7 +320,9 @@ impl TheLoggerConfig {
         self
     }
 
-    //  Getters
+    /////////////
+    /* Getters */
+    /////////////
     #[doc(hidden)]
     pub(super) fn get_years_config(&self) -> bool {
         self.date_config.hide_years
@@ -395,7 +403,9 @@ impl TheLoggerConfig {
         self.misc_config.log_content_length
     }
 
-    //  Setters
+    /////////////
+    /* Setters */
+    /////////////
     #[doc(hidden)]
     pub(super) fn set_years_config(&mut self, data: bool) {
         self.date_config.hide_years = data;
@@ -446,20 +456,20 @@ impl TheLoggerConfig {
         self.misc_config.hide_level = data;
     }
 
-    // #[doc(hidden)]
-    // pub(super) fn set_file_name_config(&mut self, data: bool) {
-    //     self.misc_config.hide_file_name = data;
-    // }
-    //
-    // #[doc(hidden)]
-    // pub(super) fn set_file_line_config(&mut self, data: bool) {
-    //     self.misc_config.hide_file_line = data;
-    // }
-    //
-    // #[doc(hidden)]
-    // pub(super) fn set_file_column_config(&mut self, data: bool) {
-    //     self.misc_config.show_file_column = data;
-    // }
+    #[doc(hidden)]
+    pub(super) fn set_file_name_config(&mut self, data: bool) {
+        self.misc_config.hide_file_name = data;
+    }
+
+    #[doc(hidden)]
+    pub(super) fn set_file_line_config(&mut self, data: bool) {
+        self.misc_config.hide_file_line = data;
+    }
+
+    #[doc(hidden)]
+    pub(super) fn set_file_column_config(&mut self, data: bool) {
+        self.misc_config.show_file_column = data;
+    }
 
     #[doc(hidden)]
     pub(super) fn set_log_level(&mut self, data: LogLevel) {
@@ -483,8 +493,8 @@ impl Default for TheLoggerConfig {
             date_config: TheDateConfig::default(),
             time_config: TheTimeConfig::default(),
             misc_config: TheMiscConfig {
-                location_length: 60,
-                log_content_length: 300,
+                location_length: LOCATION_CONTENT_INITIAL_LENGTH,
+                log_content_length: LOG_CONTENT_INITIAL_LENGTH,
                 ..Default::default()
             },
             log_level: LogLevel::Verbose

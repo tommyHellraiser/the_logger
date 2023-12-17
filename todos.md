@@ -1,3 +1,4 @@
 - add optional feature to configure by a json file
 - add optional feature to delete logs older than a week
 - see if there's any other features worth adding
+- configure log files path by json (dependent on the first feature)

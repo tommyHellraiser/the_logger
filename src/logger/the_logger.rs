@@ -80,6 +80,7 @@ impl TheLogger {
 
             //  Date formatting
             let mut space_date_time = false;
+            let mut time_shown = false;
             if !inner.config.get_years_config() {
                 datetime_format.push_str("%Y");
                 space_date_time = true;
@@ -99,20 +100,31 @@ impl TheLogger {
             //  Time formatting
             if !inner.config.get_hours_config() {
                 datetime_format.push_str("%H");
+                time_shown = true;
             }
             if !inner.config.get_minutes_config() {
                 datetime_format.push_str(":%M");
+                time_shown = true;
             }
             if !inner.config.get_seconds_config() {
                 datetime_format.push_str(":%S");
+                time_shown = true;
             }
             match (inner.config.get_millisecs_config(), inner.config.get_microsecs_config()) {
-                (false, false) => datetime_format.push_str(".%6f"),
-                (false, true) => datetime_format.push_str(".%3f"),
+                (false, false) => {
+                    datetime_format.push_str(".%6f");
+                    time_shown = true;
+                },
+                (false, true) => {
+                    datetime_format.push_str(".%3f");
+                    time_shown = true;
+                },
                 (true, false) => {},
                 _ => {}
             }
-            datetime_format.push('\t');
+            if space_date_time || time_shown {
+                datetime_format.push('\t');
+            }
             msg.push_str(&datetime.format(&datetime_format).to_string());
 
             //  Log level type config
@@ -140,7 +152,8 @@ impl TheLogger {
                         msg.push_str("[CRITICAL]\t");
                     }
                 }
-            } else {
+                //  Only insert tab if location data is not shown
+            } else if !inner.config.get_file_name_config() || !inner.config.get_file_line_config() || inner.config.get_file_column_config() {
                 msg.push('\t');
             }
 
@@ -176,7 +189,7 @@ impl TheLogger {
         } else {
             msg.push_str(incoming_msg);
         }
-        self.inner.write().await.file_writer.write_all(format!("{:<content_length$}\n", msg).as_bytes()).unwrap();
+        self.inner.write().await.file_writer.write_all(format!("{}\n", msg).as_bytes()).unwrap();
     }
 
     /// ## Description
@@ -187,7 +200,7 @@ impl TheLogger {
     ///
     /// ### Initial configuration example
     /// ```rust
-    /// use the_logger::logger::{logger_config::TheLoggerConfig, the_logger::TheLogger};
+    /// use the_logger::{TheLogger, TheLoggerConfig};
     ///
     /// async fn init_logger() {
     ///     let logger_config = TheLoggerConfig::default()
@@ -211,7 +224,7 @@ impl TheLogger {
     /// way to the initial configuration:
     ///
     /// ```rust
-    /// use the_logger::logger::{logger_config::TheLoggerConfig, the_logger::TheLogger};
+    /// use the_logger::{TheLogger, TheLoggerConfig};
     ///
     /// async fn config_logger() {
     ///     let logger_config = TheLoggerConfig::default()
@@ -231,7 +244,9 @@ impl TheLogger {
         self
     }
 
-    // Log Type methods
+    //////////////////////
+    /* Log Type methods */
+    //////////////////////
     /// ## Description
     /// Configures the log level as verbose adding the [[VERBOSE]] tag
     pub async fn verbose(&self) -> &Self {
@@ -281,7 +296,11 @@ impl TheLogger {
         self
     }
 
-    // Configuration methods
+    ///////////////////////////
+    /* Configuration methods */
+    ///////////////////////////
+    /* Hide methods */
+    //////////////////
     /// ## Description
     /// Configures the log date to hide the years. Default is to show them
     pub async fn hide_years(&self) -> &Self {
@@ -363,6 +382,32 @@ impl TheLogger {
     }
 
     /// ## Description
+    /// Configures the log file name, line and column to be hidden. Default is to show them
+    pub async fn hide_file_name(&self) -> &Self {
+        self.inner.write().await.config.set_file_name_config(true);
+        self.inner.write().await.config.set_file_line_config(true);
+        self.inner.write().await.config.set_file_column_config(false);
+        self
+    }
+
+    /// ## Description
+    /// Configures the log file line and column to be hidden. Default is to show them
+    pub async fn hide_file_line(&self) -> &Self {
+        self.inner.write().await.config.set_file_line_config(true);
+        self
+    }
+
+    /// ## Description
+    /// Configures the log file column to be shown. Default is to hide it
+    pub async fn show_file_column(&self) -> &Self {
+        self.inner.write().await.config.set_file_column_config(true);
+        self
+    }
+
+    //////////////////
+    /* Show methods */
+    //////////////////
+    /// ## Description
     /// Configures the log date to show the years. Default is to show them
     pub async fn show_years(&self) -> &Self {
         self.inner.write().await.config.set_years_config(false);
@@ -442,6 +487,30 @@ impl TheLogger {
         self
     }
 
+    /// ## Description
+    /// Configures the log file name, line and column to be shown. Default is to show them
+    pub async fn show_file_name(&self) -> &Self {
+        self.inner.write().await.config.set_file_name_config(false);
+        self
+    }
+
+    /// ## Description
+    /// Configures the log file line and column to be shown. Default is to show them
+    pub async fn show_file_line(&self) -> &Self {
+        self.inner.write().await.config.set_file_line_config(false);
+        self
+    }
+
+    /// ## Description
+    /// Configures the log file column to be shown. Default is to hide it
+    pub async fn hide_file_column(&self) -> &Self {
+        self.inner.write().await.config.set_file_column_config(false);
+        self
+    }
+
+    ///////////////////////////
+    /* Length configurations */
+    ///////////////////////////
     /// ## Description
     /// Configures the log file name, line and column location content's length. Default is 100 characters
     pub async fn location_content_length(&self, length: usize) -> &Self {

@@ -2,8 +2,7 @@
 #[macro_export]
 macro_rules! log {
     ($logger:expr, $($msg:tt)*) => {
-        let message = format!($($msg)*);
-        $logger.verbose().await.log_in_file(&message).await;
+        $logger.verbose().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
@@ -11,17 +10,14 @@ macro_rules! log {
 macro_rules! log_info {
     ($logger:expr, $($msg:tt)*) => {
 
-        let message = format!($($msg)*);
-        $logger.info().await.log_in_file(&message).await;
+        $logger.info().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
 #[macro_export]
 macro_rules! log_error {
     ($logger:expr, $($msg:tt)*) => {
-
-        let message = format!($($msg)*);
-        $logger.error().await.log_in_file(&message).await;
+        $logger.error().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
@@ -29,8 +25,7 @@ macro_rules! log_error {
 macro_rules! log_warn {
     ($logger:expr, $($msg:tt)*) => {
 
-        let message = format!($($msg)*);
-        $logger.warning().await.log_in_file(&message).await;
+        $logger.warning().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
@@ -38,8 +33,7 @@ macro_rules! log_warn {
 macro_rules! log_debug {
     ($logger:expr, $($msg:tt)*) => {
 
-        let message = format!($($msg)*);
-        $logger.debug().await.log_in_file(&message).await;
+        $logger.debug().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
@@ -47,16 +41,14 @@ macro_rules! log_debug {
 macro_rules! log_trace {
     ($logger:expr, $($msg:tt)*) => {
 
-        let message = format!($($msg)*);
-        $logger.trace().await.log_in_file(&message).await;
+        $logger.trace().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }
 
 #[macro_export]
-macro_rules! log_fatal {
+macro_rules! log_critical {
     ($logger:expr, $($msg:tt)*) => {
 
-        let message = format!($($msg)*);
-        $logger.critical().await.log_in_file(&message).await;
+        $logger.critical().await.log_in_file((file!(), line!(), column!()), &format!($($msg)*)).await;
     };
 }

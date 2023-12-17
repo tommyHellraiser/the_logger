@@ -1,4 +1,4 @@
-
+use std::fs;
 use lazy_static::lazy_static;
 use std::fs::File;
 use std::io::Write;
@@ -22,6 +22,7 @@ struct TheLoggerInner {
 
 impl TheLogger {
     fn new() -> Self {
+        fs::create_dir_all("./logs/").unwrap();
         Self {
             inner: RwLock::new(TheLoggerInner {
                 config: TheLoggerConfig::default(),
@@ -30,7 +31,7 @@ impl TheLogger {
                                      .create(true)
                                      .append(true)
                                      .open(
-                                         format!("Log {}.log", chrono::Local::now().naive_local().format("%Y-%m-%d"))
+                                         format!("./logs/Log {}.log", chrono::Local::now().naive_local().format("%Y-%m-%d"))
                                      ).unwrap()
             })
         }
@@ -47,7 +48,7 @@ impl TheLogger {
     /// - Log level enabled and set to VERBOSE
     /// - Time format set to Local time
     /// - File name and line number shown, but column number is hidden.
-    /// - File name, location, column information section is limited to a maximum default of 80 chars, configurable.
+    /// - File name, location, column information section is limited to a maximum default of 60 chars, configurable.
     /// - Log content is limited to a maximum default of 300 chars, also configurable.
     ///
     /// ### Log Example

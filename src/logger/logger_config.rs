@@ -483,7 +483,7 @@ impl Default for TheLoggerConfig {
             date_config: TheDateConfig::default(),
             time_config: TheTimeConfig::default(),
             misc_config: TheMiscConfig {
-                location_length: 80,
+                location_length: 60,
                 log_content_length: 300,
                 ..Default::default()
             },
